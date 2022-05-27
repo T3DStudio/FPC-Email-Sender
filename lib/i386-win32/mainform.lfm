@@ -1,11 +1,11 @@
 object SenderForm: TSenderForm
-  Left = 756
+  Left = 659
   Height = 376
-  Top = 198
+  Top = 162
   Width = 200
   Align = alCustom
   BorderIcons = []
-  Caption = 'Sender'
+  Caption = 'Sender v1.2'
   ClientHeight = 376
   ClientWidth = 200
   Icon.Data = {
@@ -145,6 +145,7 @@ object SenderForm: TSenderForm
     0003E0000003E0000003E0000003E0000003E0000007E000000FE000001FE000
     003F
   }
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   OnHide = FormHide
@@ -223,8 +224,8 @@ object SenderForm: TSenderForm
   end
   object clb_tags: TCheckListBox
     Left = 8
-    Height = 37
-    Top = 296
+    Height = 109
+    Top = 224
     Width = 182
     Anchors = [akLeft, akRight, akBottom]
     Columns = 2
@@ -233,23 +234,6 @@ object SenderForm: TSenderForm
     OnClickCheck = clb_tagsClickCheck
     OnMouseDown = clb_tagsMouseDown
     TabOrder = 2
-  end
-  object ListBox1: TListBox
-    Left = 9
-    Height = 56
-    Top = 224
-    Width = 183
-    Anchors = [akLeft, akRight, akBottom]
-    Items.Strings = (
-      'tag1'
-      'tag2'
-      'tag3'
-      'tag4'
-    )
-    ItemHeight = 15
-    ItemIndex = 0
-    MultiSelect = True
-    TabOrder = 5
   end
   object ti1: TTrayIcon
     BalloonHint = 'Sender'

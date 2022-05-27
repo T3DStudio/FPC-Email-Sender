@@ -28,9 +28,9 @@ type
     procedure b_cncClick(Sender: TObject);
     procedure b_sndClick(Sender: TObject);
     procedure clb_tagsClickCheck(Sender: TObject);
-    procedure clb_tagsKeyPress(Sender: TObject; var Key: char);
     procedure clb_tagsMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormHide(Sender: TObject);
@@ -110,12 +110,24 @@ begin
    Tags2SettStr;
 end;
 
+
+
 procedure TagsScanText;
-var i,u:integer;
-procedure ProcTag(tag:string);
+var i:integer;
+function ProcTag(tag:string):boolean;
+var u:integer;
 begin
+   ProcTag:=false;
+   if(length(tag)<2)then exit;
+   if(tag[1]<>'#')then exit;
+   if(tag[2]in[' ',spliter,'0'..'9'])then exit;
+
+   ProcTag:=true;
+
    delete(tag,1,1);
-   tag:=trim(tag);
+   u:=pos(' '    ,tag);if(u>0)then delete(tag,u,length(tag)-u+1);
+   u:=pos(spliter,tag);if(u>0)then delete(tag,u,length(tag)-u+1);
+
    TagsAddNew(tag);
    u:=SenderForm.clb_tags.Items.IndexOf(tag);
    if(u>-1)then SenderForm.clb_tags.Checked[u]:=True;
@@ -128,9 +140,7 @@ begin
    with SenderForm.m_txt.lines do
     if(Count>0)then
      for i:=Count-1 downto 0 do
-      if(pos('#',strings[i])>0)
-      then ProcTag(strings[i])
-      else
+      if(not ProcTag(strings[i]))then
        if(length(trim(strings[i]))>0)then break;
 
    Tags2SettStr;
@@ -161,8 +171,10 @@ begin
     begin
        SenderForm.m_txt.lines.Add('');
        for i:=0 to Count-1 do
-        if(Checked[i])then SenderForm.m_txt.lines.Add('# '+items.Strings[i]);
+        if(Checked[i])then SenderForm.m_txt.lines.Add('#'+items.Strings[i]);
     end;
+
+   Tags2SettStr;
 end;
 
 procedure TSenderForm.FormShow(Sender: TObject);
@@ -183,7 +195,7 @@ begin
       FormSett.winw:=Width;
       FormSett.winh:=Height;
    end; }
-   TagsStr2CLB(FormSett.tags);
+   TagsStr2CLB(SettForm.e_tags.text);
 end;
 
 procedure TSenderForm.FormWindowStateChange(Sender: TObject);
@@ -207,7 +219,11 @@ end;
 
 procedure TSenderForm.m_txtEditingDone(Sender: TObject);
 begin
-   TagsScanText;
+   if(SettForm.cb_scantags.Checked)then
+   begin
+      TagsScanText;
+      TagsFromCheckBoxesToText;
+   end;
 end;
 
 procedure TSenderForm.m_txtKeyDown(Sender: TObject; var Key: Word;
@@ -264,10 +280,6 @@ begin
    TagsFromCheckBoxesToText;
 end;
 
-procedure TSenderForm.clb_tagsKeyPress(Sender: TObject; var Key: char);
-begin
-end;
-
 procedure TSenderForm.clb_tagsMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
@@ -276,6 +288,11 @@ begin
       SenderForm.clb_tags.DeleteSelected;
       TagsFromCheckBoxesToText;
    end;
+end;
+
+procedure TSenderForm.FormActivate(Sender: TObject);
+begin
+   TagsStr2CLB(SettForm.e_tags.text);
 end;
 
 procedure TSenderForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);

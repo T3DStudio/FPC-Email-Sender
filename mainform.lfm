@@ -5,7 +5,7 @@ object SenderForm: TSenderForm
   Width = 200
   Align = alCustom
   BorderIcons = []
-  Caption = 'Sender'
+  Caption = 'Sender v1.2'
   ClientHeight = 376
   ClientWidth = 200
   Icon.Data = {
@@ -145,6 +145,7 @@ object SenderForm: TSenderForm
     0003E0000003E0000003E0000003E0000003E0000007E000000FE000001FE000
     003F
   }
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   OnHide = FormHide

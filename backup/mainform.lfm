@@ -145,6 +145,7 @@ object SenderForm: TSenderForm
     0003E0000003E0000003E0000003E0000003E0000007E000000FE000001FE000
     003F
   }
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   OnHide = FormHide

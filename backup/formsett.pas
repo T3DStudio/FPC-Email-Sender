@@ -82,7 +82,7 @@ begin
    str2bool:=false;
    case LowerCase(s) of
 '+',
-'y',
+'y','yes',
 'true',
 '1'     : str2bool:=true;
    else
@@ -166,8 +166,7 @@ begin
    writeln(f,cfg_str_w        ,'=',winw);
    writeln(f,cfg_str_h        ,'=',winh);
    writeln(f,cfg_str_tags     ,'=',settform.e_tags.text);
-   cfg_str_tags     :  := vl;
-   cfg_str_stags    : settform.cb_scantags.Checked :=str2bool(vl);
+   writeln(f,cfg_str_stags    ,'=',b2pm[settform.cb_scantags.Checked]);
    close(f);
 end;
 
@@ -183,7 +182,6 @@ begin
    cfg_write;
    SettForm.hide;
 end;
-
 procedure TSettForm.b_rdClick(Sender: TObject);
 begin
    cfg_read;

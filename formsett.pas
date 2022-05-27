@@ -82,7 +82,7 @@ begin
    str2bool:=false;
    case LowerCase(s) of
 '+',
-'y',
+'y','yes',
 'true',
 '1'     : str2bool:=true;
    else
@@ -182,7 +182,6 @@ begin
    cfg_write;
    SettForm.hide;
 end;
-
 procedure TSettForm.b_rdClick(Sender: TObject);
 begin
    cfg_read;

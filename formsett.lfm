@@ -5,7 +5,7 @@ object SettForm: TSettForm
   Width = 320
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'Settings'
+  Caption = 'Settings '
   ClientHeight = 355
   ClientWidth = 320
   OnClose = FormClose
@@ -40,7 +40,7 @@ object SettForm: TSettForm
     ParentColor = False
   end
   object e_sndr: TEdit
-    Left = 80
+    Left = 81
     Height = 23
     Top = 8
     Width = 232
