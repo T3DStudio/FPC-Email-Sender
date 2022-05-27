@@ -110,7 +110,21 @@ begin
    Tags2SettStr;
 end;
 
+function TagExtract(tag:string):string;
+var u:integer;
+begin
+   TagExtract:='';
 
+   if(length(tag)<2)then exit;
+   if(tag[1]<>'#')then exit;
+   if(tag[2]in[' ',spliter,'0'..'9'])then exit;
+
+   delete(tag,1,1);
+   u:=pos(' '    ,tag);if(u>0)then delete(tag,u,length(tag)-u+1);
+   u:=pos(spliter,tag);if(u>0)then delete(tag,u,length(tag)-u+1);
+
+   TagExtract:=tag;
+end;
 
 procedure TagsScanText;
 var i:integer;
@@ -118,15 +132,11 @@ function ProcTag(tag:string):boolean;
 var u:integer;
 begin
    ProcTag:=false;
-   if(length(tag)<2)then exit;
-   if(tag[1]<>'#')then exit;
-   if(tag[2]in[' ',spliter,'0'..'9'])then exit;
+
+   tag:=TagExtract(tag);
+   if(length(tag)=0)then exit;
 
    ProcTag:=true;
-
-   delete(tag,1,1);
-   u:=pos(' '    ,tag);if(u>0)then delete(tag,u,length(tag)-u+1);
-   u:=pos(spliter,tag);if(u>0)then delete(tag,u,length(tag)-u+1);
 
    TagsAddNew(tag);
    u:=SenderForm.clb_tags.Items.IndexOf(tag);
@@ -154,7 +164,7 @@ begin
    begin
       if(Count>0)then
        for i:=Count-1 downto 0 do
-        if(pos('#',strings[i])>0)
+        if(length(TagExtract(strings[i])))>0)
         then r+=1
         else
          if(length(trim(strings[i]))>0)
