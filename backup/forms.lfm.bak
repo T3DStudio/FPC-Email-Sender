@@ -1,0 +1,10 @@
+object SettForm: TSettForm
+  Left = 383
+  Height = 359
+  Top = 240
+  Width = 320
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'SettForm'
+  LCLVersion = '1.6.2.0'
+end

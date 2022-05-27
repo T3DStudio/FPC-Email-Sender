@@ -1,0 +1,195 @@
+unit MainForm;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, FileUtil, forms, Controls, Graphics, Dialogs, ExtCtrls,
+  StdCtrls, Menus, xmailer,formsett ;
+
+type
+
+  { TSenderForm }
+
+  TSenderForm = class(TForm)
+    b_snd: TButton;
+    b_cnc: TButton;
+    e_cpt: TEdit;
+    l_cpt: TLabel;
+    l_txt: TLabel;
+    mi1: TMenuItem;
+    mi2: TMenuItem;
+    m_txt: TMemo;
+    pm1: TPopupMenu;
+    ti1: TTrayIcon;
+    procedure b_cncClick(Sender: TObject);
+    procedure b_sndClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormHide(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: char);
+    procedure FormResize(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormWindowStateChange(Sender: TObject);
+    procedure mi1Click(Sender: TObject);
+    procedure mi2Click(Sender: TObject);
+    procedure m_txtKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure ti1Click(Sender: TObject);
+  private
+    { private declarations }
+  public
+    { public declarations }
+  end;
+
+var
+  SenderForm: TSenderForm;
+  Mail: TSendMail;
+
+implementation
+
+{$R *.lfm}
+
+{ TSenderForm }
+
+
+procedure TSenderForm.FormResize(Sender: TObject);
+begin
+   e_cpt.Width :=ClientWidth -e_cpt.left*2;
+   m_txt.Width :=ClientWidth -m_txt.left*2;
+   m_txt.Height:=ClientHeight-m_txt.top-40;
+   b_snd.top:=m_txt.top+m_txt.height+8;
+   b_cnc.top:=b_snd.top;
+   b_cnc.Left:=ClientWidth-b_cnc.width-8;
+
+   FormSett.winw:=Width;
+   FormSett.winh:=Height;
+end;
+
+procedure TSenderForm.FormShow(Sender: TObject);
+begin
+   e_cpt.SetFocus;
+   if(0<FormSett.winx)and(FormSett.winx<(Monitor.Width-FormSett.winw-20))and(0<FormSett.winy)and(FormSett.winy<(Monitor.Height-FormSett.winh-20))then
+   begin
+      Left:=FormSett.winx;
+      Top :=FormSett.winy;
+      Width:=FormSett.winw;
+      Height:=FormSett.winh;
+   end
+   else
+   begin
+      SenderForm.Position:=poScreenCenter;
+      FormSett.winx:=Left;
+      FormSett.winy:=Top;
+      FormSett.winw:=Width;
+      FormSett.winh:=Height;
+   end;
+end;
+
+procedure TSenderForm.FormWindowStateChange(Sender: TObject);
+begin
+   case WindowState of
+     //wsNormal   : SenderForm.res;
+     //wsMaximized: Application.Title := 'Maximized';
+     wsMinimized: SenderForm.hide;
+   end;
+end;
+
+procedure TSenderForm.mi1Click(Sender: TObject);
+begin
+   settform.show;
+end;
+
+procedure TSenderForm.mi2Click(Sender: TObject);
+begin
+   Application.Terminate;
+end;
+
+procedure TSenderForm.m_txtKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+   if (ssCtrl in Shift) and (Key = 13) then
+   begin
+      b_sndClick(sender);
+      key:=#0;
+   end;
+end;
+
+procedure TSenderForm.ti1Click(Sender: TObject);
+begin
+   SenderForm.show;
+   SenderForm.WindowState:=wsNormal;
+end;
+
+procedure TSenderForm.b_cncClick(Sender: TObject);
+begin
+   SenderForm.hide;
+end;
+
+procedure TSenderForm.b_sndClick(Sender: TObject);
+begin
+  // if(SettForm.m_rcvs.Text='')then
+   try
+     try
+       Mail.Sender := SettForm.e_sndr.Text; //'<active80@ipsedix.ru>';
+       Mail.Receivers.Clear;
+       Mail.Receivers.text:=SettForm.e_rcsv.Text;
+       Mail.Subject := e_cpt.Text;
+       Mail.Message.Clear;
+       Mail.Message.text:=m_txt.Lines.text;
+       // SMTP
+       Mail.Smtp.UserName := SettForm.e_usr.text;
+       Mail.Smtp.Password := SettForm.e_pswd.text;
+       Mail.Smtp.Host := SettForm.e_host.Text;//'82.146.47.110';
+       Mail.Smtp.Port := SettForm.e_port.text;
+       Mail.Smtp.SSL := SettForm.cb_ssl.Checked;
+       Mail.Smtp.TLS := SettForm.cb_tls.Checked;
+       Mail.Send;
+     except
+       on E: Exception do ShowMessage(E.Message);
+     end;
+   finally
+     //Mail.Free;
+   end;
+   SenderForm.hide;
+end;
+
+procedure TSenderForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+   SenderForm.hide;
+   CloseAction:=caNone;
+end;
+
+procedure TSenderForm.FormCreate(Sender: TObject);
+begin
+   Mail := TSendMail.Create;
+   Left:=FormSett.winx;
+   Top :=FormSett.winy;
+   Width:=FormSett.winw;
+   Height:=FormSett.winh;
+
+   Constraints.MinHeight:=200;
+   Constraints.MinWidth:=200;
+end;
+
+procedure TSenderForm.FormHide(Sender: TObject);
+begin
+   e_cpt.Text:='';
+   m_txt.Lines.text:='';
+
+   FormSett.winx:=Left;
+   FormSett.winy:=Top;
+end;
+
+procedure TSenderForm.FormKeyPress(Sender: TObject; var Key: char);
+begin
+   if key=#27 then
+   begin
+      key:=#0;
+      SenderForm.hide;
+   end;
+end;
+
+
+end.
+

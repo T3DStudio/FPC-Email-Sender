@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="C:\lazarus\fpc\3.2.0\bin\i386-win32\fpc.exe" Date="1381338394"/>
+  <Params Value=" -MObjFPC -Sh -O1 -WG -l -vewnhibq -FiE:\t3ds\Sender\lib\i386-win32 -FuC:\lazarus\lcl\units\i386-win32\win32 -FuC:\lazarus\lcl\units\i386-win32 -FuC:\lazarus\components\lazutils\lib\i386-win32 -FuC:\lazarus\packager\units\i386-win32 -FuE:\t3ds\Sender\ -FUE:\t3ds\Sender\lib\i386-win32\ -FEE:\t3ds\Sender\ -oE:\t3ds\Sender\Sender.exe -dLCL -dLCLwin32 Sender.lpr"/>
+  <Complete Value="False"/>
+</CONFIG>
