@@ -1,11 +1,11 @@
 object SenderForm: TSenderForm
-  Left = 659
+  Left = 648
   Height = 376
-  Top = 162
+  Top = 176
   Width = 200
   Align = alCustom
   BorderIcons = []
-  Caption = 'Sender v1.2'
+  Caption = 'Sender v1.3'
   ClientHeight = 376
   ClientWidth = 200
   Icon.Data = {

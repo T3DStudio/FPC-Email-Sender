@@ -276,13 +276,13 @@ begin
        Mail.Smtp.SSL  := SettForm.cb_ssl.Checked;
        Mail.Smtp.TLS  := SettForm.cb_tls.Checked;
        Mail.Send;
+       SenderForm.hide;
      except
        on E: Exception do ShowMessage(E.Message);
      end;
    finally
      //Mail.Free;
    end;
-   SenderForm.hide;
 end;
 
 procedure TSenderForm.clb_tagsClickCheck(Sender: TObject);

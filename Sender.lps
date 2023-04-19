@@ -21,8 +21,8 @@
         <UnitName Value="MainForm"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="147"/>
-        <CursorPos X="80" Y="171"/>
+        <TopLine Value="314"/>
+        <CursorPos X="4" Y="316"/>
         <UsageCount Value="107"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -34,7 +34,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="64"/>
+        <TopLine Value="63"/>
         <CursorPos X="68" Y="33"/>
         <UsageCount Value="103"/>
         <Loaded Value="True"/>
@@ -198,11 +198,11 @@
       </Position28>
       <Position29>
         <Filename Value="mainform.pas"/>
-        <Caret Line="149" Column="35" TopLine="206"/>
+        <Caret Line="174" Column="48" TopLine="155"/>
       </Position29>
       <Position30>
         <Filename Value="mainform.pas"/>
-        <Caret Line="174" Column="48" TopLine="155"/>
+        <Caret Line="269" Column="97" TopLine="252"/>
       </Position30>
     </JumpHistory>
     <RunParams>
